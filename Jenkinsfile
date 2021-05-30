@@ -17,5 +17,12 @@ pipeline {
               }
             }
       }
+        stage ('deploy') {
+            steps {
+              sshagent(['deployuser']) {
+                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@54.234.170.172:/home/ec2-user/"
+                }
+              }
+            }
     }
   }
