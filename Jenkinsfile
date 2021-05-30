@@ -5,24 +5,13 @@ pipeline {
     }
     
     stages {
-        stage ('build') {
-            steps {
-                sh "mvn clean package"
-            }
-        }
-        stage ('analysis') {
-            steps {
-              withSonarQubeEnv('sonarqube'){
-                sh "mvn sonar:sonar"
-              }
-            }
-      }
+        
         stage ('deploy') {
             steps {
               sshagent(['deployuser']) {
-                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@54.234.170.172:/home/ec2-user/"
+                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@172.31.18.126:/home/ec2-user/"
                 }
               }
             }
+      }
     }
-  }
