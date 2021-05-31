@@ -8,7 +8,7 @@ pipeline {
         
         stage ('deploy') {
             steps {
-              //sshagent(['deployuser']) {
+              sshagent(['deployuser']) {
                     sh '''
                     ssh ec2-user@172.31.59.4
                     touch Dockerfile
@@ -22,7 +22,7 @@ pipeline {
                     '''
                 }
               }
-            
+        }
       }
     }
   
