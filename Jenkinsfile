@@ -11,7 +11,7 @@ pipeline {
               sshagent(['deployuser']) {
                     sh '''
                         scp -o StrictHostKeyChecking=no Dockerfile ec2-user@172.31.59.4:/home/ec2-user
-                        sudo docker build -t customimage .
+                        docker build -t customimage .
                         docker run -d -p 8080:8080 --name customcontainer customimage
                     '''
                 }
