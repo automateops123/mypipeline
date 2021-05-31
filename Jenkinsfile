@@ -9,10 +9,10 @@ pipeline {
         stage ('deploy') {
             steps {
               sshagent(['deployuser']) {
-                    sh "scp /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@172-31-59-4:/home/ec2-user"
+                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@172.31.59.4:/home/ec2-user"
+                }
               }
             }
       }
     }
-}
   
