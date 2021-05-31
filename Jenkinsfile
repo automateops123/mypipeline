@@ -10,14 +10,12 @@ pipeline {
             steps {
               sshagent(['deployuser']) {
                     sh '''
-                    ssh ec2-user@172.31.59.4
-                    sudo touch /home/ec2-user/Dockerfile
-                    sudo chown ec2-user:ec2-user /home/ec2-user/Dockerfile
-                    cat > /home/ec2-user/Dockerfile <<EOL
+                    touch Dockerfile
+                    cat <<EOF>> Dockerfile
                     FROM tomcat:latest
                     COPY ./webapp.war /usr/local/tomcat/webapps
                     RUN cp -r /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps
-                    EOL
+                    EOF
                     sudo docker build -t customimage .
                     docker run -d -p 8080:8080 --name customcontainer customimage
                     '''
