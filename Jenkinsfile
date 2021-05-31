@@ -9,9 +9,17 @@ pipeline {
         stage ('deploy') {
             steps {
               sshagent(['deployuser']) {
-                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mypipeline1/webapp/target/webapp.war ec2-user@172.31.59.4:/home/ec2-user"
-                }
+                    sh script: '''
+                    touch dockerfile
+                    cat <<EOT>>dockerfile
+                    FROM tomcat:latest
+                    COPY ./webapp.war /usr/local/tomcat/webapps
+                    RUN cp -r /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps
+                    EOT
+                    sudo docker build -t webimage .
+                    sudo docker run -d -p 8080:8080 --name mycontainer webimage'''
               }
             }
       }
     }
+  
