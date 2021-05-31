@@ -11,8 +11,8 @@ pipeline {
               sshagent(['deployuser']) {
                     sh '''
                     ssh ec2-user@172.31.59.4
-                    touch Dockerfile
-                    cat > Dockerfile <<EOL
+                    touch /home/ec2-user/Dockerfile
+                    cat > /home/ec2-user/Dockerfile <<EOL
                     FROM tomcat:latest
                     COPY ./webapp.war /usr/local/tomcat/webapps
                     RUN cp -r /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps
