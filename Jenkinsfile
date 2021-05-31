@@ -11,7 +11,8 @@ pipeline {
               sshagent(['deployuser']) {
                     sh '''
                     ssh ec2-user@172.31.59.4
-                    touch /home/ec2-user/Dockerfile
+                    sudo touch /home/ec2-user/Dockerfile
+                    sudo chown ec2-user:ec2-user /home/ec2-user/Dockerfile
                     cat > /home/ec2-user/Dockerfile <<EOL
                     FROM tomcat:latest
                     COPY ./webapp.war /usr/local/tomcat/webapps
