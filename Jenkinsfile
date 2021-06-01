@@ -9,7 +9,7 @@ pipeline {
         stage ('deploy') {
             steps {
               sshagent(['deployuser']) {
-                    sh 'docker build . -t customimage'
+                    sh "scp /home/ec2-user/Dockerfile ec2-user@172.31.59.4:/home/ec2-user/"
                     
                      }
               }
