@@ -9,9 +9,8 @@ pipeline {
         stage ('deploy') {
             steps {
               sshagent(['deployuser']) {
-                    sh 'scp -o StrictHostKeyChecking=no Dockerfile ec2-user@172.31.59.4:/home/ec2-user'
-                    sh 'docker build -t customimage .'
-                    sh 'docker run -d -p 8080:8080 --name customcontainer customimage'
+                    sh 'docker build . -t customimage'
+                    
                      }
               }
         }
