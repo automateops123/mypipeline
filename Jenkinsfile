@@ -17,8 +17,10 @@ pipeline {
         }
         stage ('deploy1') {
             steps {
-                sh "docker build -t arpithmadhusudan/customimage:1.0 ."
+                sshagent(['deployuser']) {
+                    sh "docker build . -t arpithmadhusudan/customimage:1.0"
               }
+            }
         }
       }
     }
